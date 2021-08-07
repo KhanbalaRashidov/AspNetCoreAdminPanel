@@ -15,6 +15,7 @@ namespace AspNetCoreAdminPanel.Business.Abstract
         Task<Product> UpdateAsync(Product product);
         void Delete(Product product);
         List<Product> GetList();
+        Product GetByName(string name);
         Product GetById(int id);
         List<Product> GetListByCategoryId(int categoryId);
     }

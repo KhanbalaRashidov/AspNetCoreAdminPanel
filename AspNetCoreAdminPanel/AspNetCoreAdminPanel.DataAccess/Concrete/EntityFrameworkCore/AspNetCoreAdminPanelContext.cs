@@ -13,9 +13,11 @@ namespace AspNetCoreAdminPanel.DataAccess.Concrete.EntityFrameworkCore
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=KHANBALA\SQLEXPRESS;Initial Catalog=MVCProject;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=KHANBALA\SQLEXPRESS;Initial Catalog=AdminPanel;Integrated Security=True");
 
         }
+       
+        
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
 

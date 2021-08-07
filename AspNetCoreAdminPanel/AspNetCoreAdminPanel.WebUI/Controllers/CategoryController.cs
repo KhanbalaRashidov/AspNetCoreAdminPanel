@@ -24,28 +24,31 @@ namespace AspNetCoreAdminPanel.WebUI.Controllers
             };
             return View(categoryViewModel);
         }
+        [HttpPost]
         public IActionResult Add(CategoryViewModel categoryViewModel)
         {
+            
             if (!ModelState.IsValid)
             {
                 var categoryForAdd = new Category
                 {
-                    AddedBy = "Cihan Aybar",
+                    AddedBy = "Khanbala Rashidov",
                     AddedDate = DateTime.Now,
                     IsActive = true,
                     Name = categoryViewModel.Category.Name
                 };
+
                 try
                 {
                     _categoryService.Add(categoryForAdd);
-                    return RedirectToAction("GetCategories");
+                    return RedirectToAction(nameof(GetCategories));
                 }
                 catch (Exception)
                 {
 
                 }
             }
-            return RedirectToAction("GetCategories");
+            return RedirectToAction(nameof(GetCategories));
         }
         public JsonResult Edit(int id)
         {
@@ -68,7 +71,7 @@ namespace AspNetCoreAdminPanel.WebUI.Controllers
                 var categoryIsValid = _categoryService.GetById(categoryViewModel.Category.Id);
                 if (categoryIsValid == null)
                 {
-                    return RedirectToAction("GetCategories");
+                    return RedirectToAction(nameof(GetCategories));
                 }
                 try
                 {
@@ -81,14 +84,14 @@ namespace AspNetCoreAdminPanel.WebUI.Controllers
                         Name = categoryViewModel.Category.Name
                     };
                     _categoryService.Update(categoryForAdd);
-                    return RedirectToAction("GetCategories");
+                    return RedirectToAction(nameof(GetCategories));
                 }
                 catch (Exception)
                 {
-                    return RedirectToAction("GetCategories");
+                    return RedirectToAction(nameof(GetCategories));
                 }
             }
-            return RedirectToAction("GetCategories");
+            return RedirectToAction(nameof(GetCategories));
         }
         public JsonResult Delete(int id)
         {

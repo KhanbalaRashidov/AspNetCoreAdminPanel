@@ -22,7 +22,7 @@ namespace AspNetCoreAdminPanel.DataAccess.Concrete.EntityFrameworkCore.Mappings
             builder.Property(d => d.AddedDate).HasColumnName("AddedDate");
             builder.Property(d => d.CategoryId).HasColumnName("CategoryId");
             builder.Property(d => d.Height).HasColumnName("Height");
-            builder.Property(d => d.Weight).HasColumnName("Height");
+            builder.Property(d => d.Weight).HasColumnName("Weight");
             builder.Property(d => d.Width).HasColumnName("Width");
         }
     }

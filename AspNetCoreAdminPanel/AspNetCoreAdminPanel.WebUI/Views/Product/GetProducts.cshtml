@@ -1,0 +1,88 @@
+﻿@model AspNetCoreAdminPanel.WebUI.Models.ProductViewModel
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <h4 class="header-title m-t-0 m-b-30">List of Products</h4>
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#product-adding-modal" data-dismiss="modal" style="margin-bottom:10px; margin-left:8px;">Add Product</button>
+
+            <div id="datatable-buttons_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <table id="datatable-buttons" class="table table-dark table-hover  " role="grid" aria-describedby="datatable-buttons_info">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Id: activate to sort column descending" style="width: 5%;">Id</th>
+                            <th class="sorting_" tabindex="1" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 20%;">Name</th>
+                            <th class="sorting" tabindex="2" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="IsActive: activate to sort column descending" style="width: 15%;">Is CategoryId</th>
+                            <th class="sorting" tabindex="3" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedBy: activate to sort column descending" style="width: 15%;">Height</th>
+                            <th class="sorting" tabindex="4" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedDate: activate to sort column descending" style="width: 15%; ">Weight</th>
+                            <th class="sorting" tabindex="4" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedDate: activate to sort column descending" style="width: 15%;">Width</th> 
+                            <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
+                            <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var product in Model.Products)
+                        {
+                            <tr role="row" class="odd">
+                                <td class="sorting_1" tabindex="0">@product.Id</td>
+                                <td>@product.Name</td>
+                                <td>@product.CategoryId</td>
+                                <td>@product.Height</td>
+                                <td>@product.Weight</td>
+                                <td>@product.Width</td>
+                                <td align="center"><button class="btn btn-purple" data-toggle="modal" data-target="#category-updating-modal" onclick="editProduct(@product.Id)">Edit</button></td>
+                                <td align="center"><button class="btn btn-danger" onclick="deleteProduct(@product.Id)">Delete</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- end col -->
+</div>
+<div id="product-adding-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <form asp-controller="Product" asp-action="Add" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><i class="fa fa-plus-circle"></i> Add Product</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Name</label>
+                                <input asp-for="@Model.Product.Name" type="text" class="form-control" id="field-1" placeholder="Enter Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">category Id</label>
+                                <input asp-for="@Model.Product.CategoryId" type="text" class="form-control" id="field-1" placeholder="Enter Category Id">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Description</label>
+                                <input asp-for="@Model.Product.Description" type="text" class="form-control" id="field-1" placeholder="Enter Description">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Height</label>
+                                <input asp-for="@Model.Product.Height" type="text" class="form-control" id="field-1" placeholder="Enter Height">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Weight</label>
+                                <input asp-for="@Model.Product.Weight" type="text" class="form-control" id="field-1" placeholder="Enter Height">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Width</label>
+                                <input asp-for="@Model.Product.Width" type="text" class="form-control" id="field-1" placeholder="Enter Width">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-purple waves-effect waves-light">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div><!-- /.modal -->
