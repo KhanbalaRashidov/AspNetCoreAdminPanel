@@ -1,7 +1,7 @@
 ﻿@model AspNetCoreAdminPanel.WebUI.Models.CategoryViewModel
 @{
     ViewData["Title"] = "GetCategories";
-    
+
 }
 <div class="row">
     <div class="col-sm-12">
@@ -113,8 +113,8 @@
                    $('#categoryName').val(category.name);
                    $('#categoryIsActive').val(category.isActive);
                    $('#category-updating-modal').modal('show');
-               })
-       }
+           })
+    }
 
         function deleteCategory(id)
        {
@@ -127,7 +127,7 @@
                        else {
                            swal("Tebrikler!", "Emeliyyat muveffeqiyetle yerine yetirildi!", "success");
                        }
-                   })
+            })
        }
 </script>
 

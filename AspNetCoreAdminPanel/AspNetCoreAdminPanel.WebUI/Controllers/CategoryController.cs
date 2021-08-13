@@ -24,7 +24,7 @@ namespace AspNetCoreAdminPanel.WebUI.Controllers
             };
             return View(categoryViewModel);
         }
-        [HttpPost]
+     
         public IActionResult Add(CategoryViewModel categoryViewModel)
         {
             

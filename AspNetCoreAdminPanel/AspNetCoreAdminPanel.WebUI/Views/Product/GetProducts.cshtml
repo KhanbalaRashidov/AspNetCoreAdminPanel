@@ -42,14 +42,14 @@
 </div>
 <div id="product-adding-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
-        <form asp-controller="Product" asp-action="Add" method="post">
+        <form asp-controller="Product" asp-action="Add" method="post" >
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title"><i class="fa fa-plus-circle"></i> Add Product</h4>
                 </div>
-                <div class="modal-body">
-                    <div class="row">
+                <div class="modal-body" >
+                    <div class="row" >
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="field-1" class="control-label">Name</label>
@@ -58,10 +58,6 @@
                             <div class="form-group">
                                 <label for="field-1" class="control-label">category Id</label>
                                 <input asp-for="@Model.Product.CategoryId" type="text" class="form-control" id="field-1" placeholder="Enter Category Id">
-                            </div>
-                            <div class="form-group">
-                                <label for="field-1" class="control-label">Description</label>
-                                <input asp-for="@Model.Product.Description" type="text" class="form-control" id="field-1" placeholder="Enter Description">
                             </div>
                             <div class="form-group">
                                 <label for="field-1" class="control-label">Height</label>
@@ -75,6 +71,10 @@
                                 <label for="field-1" class="control-label">Width</label>
                                 <input asp-for="@Model.Product.Width" type="text" class="form-control" id="field-1" placeholder="Enter Width">
                             </div>
+                             <div class="form-group">
+                                <label for="field-12" class="control-label">Description</label>
+                                <textarea asp-for="@Model.Product.Description" type="text" class="form-control autogrow" id="descriptionForUpdate" placeholder="Write something about product" style="overflow:hidden;word-wrap:break-word; resize:horizontal; height:104px;"></textarea>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -86,3 +86,94 @@
         </form>
     </div>
 </div><!-- /.modal -->
+
+<div id="product-updating-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <form asp-controller="Product" asp-action="Edit" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><i class="fa fa-plus-circle"></i> Update Product</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input asp-for="@Model.Product.Id" id="productId" hidden />
+                            <div class="form-group">
+                                <label for="field-7" class="control-label">Name</label>
+                                <input asp-for="@Model.Product.Name" type="text" class="form-control" id="nameForUpdate" placeholder="Enter Name">
+                            </div>
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label for="field-8" class="control-label">CategoryId</label>
+                                    <input asp-for="@Model.Product.CategoryId" type="text" class="form-control" id="categoryIdForUpdate" placeholder="Enter Category">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-9" class="control-label">Height</label>
+                                <input asp-for="@Model.Product.Height" type="text" class="form-control" id="heightForUpdate" placeholder="Enter Height">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-10" class="control-label">Weight</label>
+                                <input asp-for="@Model.Product.Weight" type="text" class="form-control" id="weightForUpdate" placeholder="Enter Weight">
+                            </div>
+                            <div class="form-group">
+                                <label for="field-11" class="control-label">Width</label>
+                                <input asp-for="@Model.Product.Width" type="text" class="form-control" id="widthForUpdate" placeholder="Enter Width">
+                            </div>
+                             <div class="form-group">
+                                <label for="field-12" class="control-label">Description</label>
+                                <textarea asp-for="@Model.Product.Description" type="text" class="form-control autogrow" id="descriptionForUpdate" placeholder="Write something about product" style="overflow:hidden;word-wrap:break-word; resize:horizontal; height:104px;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-purple waves-effect waves-light">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+   function editProduct(id) {
+        $.get("/Product/Edit", { id: id })
+            .done(function (result) {
+                $('#productId').val(result.id);
+                $('#nameForUpdate').val(result.name);
+                $('#categoryIdForUpdate').val(result.categoryId)
+                $('#heightForUpdate').val(result.height);
+                $('#weightForUpdate').val(result.weight);
+                $('#widthForUpdate').val(result.width);
+                $('#descriptionForUpdate').val(result.explanation);
+                $('#product-updating-modal').modal('show');
+            })
+    }
+
+    function deleteProduct(id) {
+        swal({
+            title: "Are you sure you want to delete it?",
+            text: "Deleted records are not listed again!",
+            type: "warning",
+            showCancelButton: true,
+            cancelButtonText: "Exit",
+            confirmButtonClass: "btn-warning",
+            confirmButtonText: "Yes, you can delete it!",
+            closeOnConfirm: false
+        },
+            function () {
+                $.get("/Product/Delete/", { id: id })
+                    .done(function (result) {
+                        if (result == 0) {
+                            swal("Warning!", "An Error Has Occurred!", "warning");
+                        }
+                        else {
+                            swal("Success!", "Your operation has been successfully performed!", "success");
+                            location.reload();
+                        }
+                    })
+            });
+    }
+</script>
