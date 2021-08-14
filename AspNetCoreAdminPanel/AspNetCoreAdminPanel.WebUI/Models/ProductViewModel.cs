@@ -1,4 +1,6 @@
-﻿using AspNetCoreAdminPanel.Entities.Concrete;
+﻿using AspNetCoreAdminPanel.Entities.ComplexTypes;
+using AspNetCoreAdminPanel.Entities.Concrete;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ namespace AspNetCoreAdminPanel.WebUI.Models
     public class ProductViewModel
     {
         public Product Product{ get; set; }
-        public List<Product> Products { get; set; }
+        public List<ProductCategoryComplexData> Products { get; set; }
+        public List<SelectListItem> Categories { get; set; }
     }
 }

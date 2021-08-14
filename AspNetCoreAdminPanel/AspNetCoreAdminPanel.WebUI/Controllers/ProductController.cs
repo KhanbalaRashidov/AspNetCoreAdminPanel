@@ -2,6 +2,7 @@
 using AspNetCoreAdminPanel.Entities.Concrete;
 using AspNetCoreAdminPanel.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,19 +13,31 @@ namespace AspNetCoreAdminPanel.WebUI.Controllers
     public class ProductController : Controller
     {
         IProductService _productService;
-        public ProductController(IProductService productService)
+        ICategoryService _categoryService;
+        public ProductController(IProductService productService, ICategoryService categoryService)
         {
             _productService = productService;
+            _categoryService = categoryService;
         }
         public IActionResult GetProducts()
         {
             var productViewModel = new ProductViewModel
             {
-                Products = _productService.GetList()
+                Products = _productService.GetProductWithCategory(),
+                Categories=LoadCategories()
             };
             return View(productViewModel);
         }
-
+        private List<SelectListItem> LoadCategories()
+        {
+            List<SelectListItem> categories = (from category in _categoryService.GetList()
+                                               select new SelectListItem
+                                               {
+                                                   Value = category.Id.ToString(),
+                                                   Text = category.Name
+                                               }).ToList();
+            return categories;
+        }
         public IActionResult Add(ProductViewModel productViewModel)
         {
             if (!ModelState.IsValid)
@@ -103,16 +116,16 @@ namespace AspNetCoreAdminPanel.WebUI.Controllers
 
                     return RedirectToAction(nameof(GetProducts));
                 }
-               
+
             }
             return RedirectToAction(nameof(GetProducts));
         }
 
         public IActionResult Delete(int id)
         {
-            if (id>0)
+            if (id > 0)
             {
-                var productIsValid=_productService.GetById(id);
+                var productIsValid = _productService.GetById(id);
                 if (productIsValid == null)
                 {
                     return RedirectToAction(nameof(GetProducts));

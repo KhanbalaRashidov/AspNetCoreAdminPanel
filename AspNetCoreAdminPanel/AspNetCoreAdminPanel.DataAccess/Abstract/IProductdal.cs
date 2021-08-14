@@ -1,4 +1,5 @@
 ﻿using AspNetCoreAdminPanel.Core.DataAccess;
+using AspNetCoreAdminPanel.Entities.ComplexTypes;
 using AspNetCoreAdminPanel.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,6 @@ namespace AspNetCoreAdminPanel.DataAccess.Abstract
 {
     public interface IProductdal:IEntityRepository<Product>
     {
+        List<ProductCategoryComplexData> GetProductWithCategory();
     }
 }

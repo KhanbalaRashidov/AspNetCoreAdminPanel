@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AspNetCoreAdminPanel.DataAccess.Migrations
 {
     [DbContext(typeof(AspNetCoreAdminPanelContext))]
-    [Migration("20210807115150_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210813153844_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

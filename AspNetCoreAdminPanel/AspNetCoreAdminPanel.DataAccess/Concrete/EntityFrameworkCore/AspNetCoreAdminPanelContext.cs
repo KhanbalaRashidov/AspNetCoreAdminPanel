@@ -13,7 +13,7 @@ namespace AspNetCoreAdminPanel.DataAccess.Concrete.EntityFrameworkCore
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=KHANBALA\SQLEXPRESS;Initial Catalog=AdminPanel;Integrated Security=True");
+            optionsBuilder.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=AspNetCoreAdminPanel;Integrated Security=True;");
 
         }
        

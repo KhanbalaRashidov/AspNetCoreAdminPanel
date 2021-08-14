@@ -1,5 +1,6 @@
 ﻿using AspNetCoreAdminPanel.Business.Abstract;
 using AspNetCoreAdminPanel.DataAccess.Abstract;
+using AspNetCoreAdminPanel.Entities.ComplexTypes;
 using AspNetCoreAdminPanel.Entities.Concrete;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,11 @@ namespace AspNetCoreAdminPanel.Business.Concrete.Managers
         public List<Product> GetListByCategoryId(int categoryId)
         {
             return _productDal.GetAll(d => d.CategoryId == categoryId);
+        }
+
+        public List<ProductCategoryComplexData> GetProductWithCategory()
+        {
+            return _productDal.GetProductWithCategory();
         }
 
         public Product Update(Product product)

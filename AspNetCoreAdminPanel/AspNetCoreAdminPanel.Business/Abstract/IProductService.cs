@@ -1,4 +1,5 @@
-﻿using AspNetCoreAdminPanel.Entities.Concrete;
+﻿using AspNetCoreAdminPanel.Entities.ComplexTypes;
+using AspNetCoreAdminPanel.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,5 +19,6 @@ namespace AspNetCoreAdminPanel.Business.Abstract
         Product GetByName(string name);
         Product GetById(int id);
         List<Product> GetListByCategoryId(int categoryId);
+        List<ProductCategoryComplexData> GetProductWithCategory();
     }
 }
