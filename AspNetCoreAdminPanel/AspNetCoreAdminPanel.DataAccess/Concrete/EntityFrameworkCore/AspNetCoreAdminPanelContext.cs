@@ -20,11 +20,13 @@ namespace AspNetCoreAdminPanel.DataAccess.Concrete.EntityFrameworkCore
         
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration<Category>(new CategoryMap());
             modelBuilder.ApplyConfiguration<Product>(new ProductMap());
+            modelBuilder.ApplyConfiguration<ProductImage>(new ProductImageMap());
         }
     }
 }

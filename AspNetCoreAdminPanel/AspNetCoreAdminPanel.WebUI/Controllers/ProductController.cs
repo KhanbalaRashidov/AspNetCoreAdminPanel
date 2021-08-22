@@ -3,6 +3,7 @@ using AspNetCoreAdminPanel.Entities.Concrete;
 using AspNetCoreAdminPanel.WebUI.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using IHostingEnviroment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,17 +15,22 @@ namespace AspNetCoreAdminPanel.WebUI.Controllers
     {
         IProductService _productService;
         ICategoryService _categoryService;
-        public ProductController(IProductService productService, ICategoryService categoryService)
+        IProductImageService _productImageService;
+        IHostingEnviroment _environment;
+        public ProductController(IProductService productService, ICategoryService categoryService,
+            IProductImageService productImageService, IHostingEnviroment environment)
         {
             _productService = productService;
             _categoryService = categoryService;
+            _productImageService = productImageService;
+            _environment = environment;
         }
         public IActionResult GetProducts()
         {
             var productViewModel = new ProductViewModel
             {
                 Products = _productService.GetProductWithCategory(),
-                Categories=LoadCategories()
+                Categories = LoadCategories()
             };
             return View(productViewModel);
         }
@@ -38,11 +44,27 @@ namespace AspNetCoreAdminPanel.WebUI.Controllers
                                                }).ToList();
             return categories;
         }
+        public IActionResult GetProductDetail(int id)
+        {
+            if (id>0)
+            {
+                var productIsValid = _productService.GetById(id);
+                var productImages=_productImageService.GetListByProductId(id);
+                var productViewModel = new ProductViewModel
+                {
+                    Product = productIsValid,
+                    ProductImages = productImages,
+                    Categories=LoadCategories()
+
+                };
+                return View(productViewModel);
+            }
+            return RedirectToAction(nameof(GetProducts));
+        }
         public IActionResult Add(ProductViewModel productViewModel)
         {
             if (!ModelState.IsValid)
             {
-
                 var productIsValid = _productService.GetByName(productViewModel.Product.Name);
                 if (productIsValid != null)
                 {
@@ -61,7 +83,28 @@ namespace AspNetCoreAdminPanel.WebUI.Controllers
                 };
                 try
                 {
-                    _productService.Add(productForAdd);
+                    var addedProduct = _productService.Add(productForAdd);
+                    if (productViewModel.FormFiles != null)
+                    {
+                        foreach (var image in productViewModel.FormFiles)
+                        {
+                            var uniqueFileName = Guid.NewGuid().ToString() + "_" + image.FileName;
+                            var filePath = Path.DirectorySeparatorChar.ToString() + "ProductImages" + Path.DirectorySeparatorChar.ToString() + uniqueFileName;
+                            var upLoadsFolder = Path.Combine(_environment.WebRootPath, "ProductImages");
+                            var filePathForCopy = Path.Combine(upLoadsFolder, uniqueFileName);
+                            image.CopyTo(new FileStream(filePathForCopy, FileMode.Create));
+                            var productImagesForAdd = new ProductImage
+                            {
+                                AddedBy = "Khanbala Rashidov",
+                                AddedDate = DateTime.Now,
+                                ProductId = addedProduct.Id,
+                                FileName=uniqueFileName,
+                                FilePath=filePath
+
+                            };
+                            _productImageService.Add(productImagesForAdd);
+                        }
+                    }
                     return RedirectToAction(nameof(GetProducts));
                 }
                 catch (Exception e)

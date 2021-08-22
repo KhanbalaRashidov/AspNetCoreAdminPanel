@@ -1,0 +1,53 @@
+﻿@model AspNetCoreAdminPanel.WebUI.Models.ProductViewModel
+@{
+	ViewData["Title"]="GetProductDetail";
+}
+ <form>
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title"><i class="fa fa-plus-circle"></i> Product Detail</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="field-1" class="control-label">Name</label>
+                            <input asp-for="@Model.Product.Name" type="text" class="form-control" id="field-1" placeholder="e.g. Name" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-2" class="control-label">CategoryId</label>
+                            <select class="form-control" id="drpCategories" asp-for="@Model.Product.CategoryId" asp-items="@Model.Categories" disabled>
+                                <option disabled selected value="-1">--Choose--</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-3" class="control-label">Height</label>
+                            <input asp-for="@Model.Product.Height" type="text" class="form-control" id="field-1" placeholder="e.g. Height" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-4" class="control-label">Weight</label>
+                            <input asp-for="@Model.Product.Weight" type="text" class="form-control" id="field-1" placeholder="e.g. Weight" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-5" class="control-label">Width</label>
+                            <input asp-for="@Model.Product.Width" type="text" class="form-control" id="field-1" placeholder="e.g. Width" disabled>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-6" class="control-label">Explanation</label>
+                            <textarea disabled asp-for="@Model.Product.Description" type="text" class="form-control autogrow" id="field-1" placeholder="Write something about product" style="overflow:hidden;word-wrap:break-word; resize:horizontal; height:104px;"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="field-6" class="control-label">Product Photos</label>
+                            <ul>
+                                @foreach (var image in Model.ProductImages)
+                                {
+                                    <li><a href="@image.FilePath" download="">@image.FileName</a> </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>

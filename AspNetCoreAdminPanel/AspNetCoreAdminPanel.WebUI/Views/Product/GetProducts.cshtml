@@ -8,7 +8,7 @@
 
             <div id="datatable-buttons_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
                 <table id="datatable-buttons" class="table table-dark table-hover  " role="grid" aria-describedby="datatable-buttons_info">
-                    <thead>
+                    <thead style="color:coral">
                         <tr role="row">
                             <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Id: activate to sort column descending" style="width: 5%;">Id</th>
                             <th class="sorting_" tabindex="1" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 20%;">Name</th>
@@ -16,6 +16,7 @@
                             <th class="sorting" tabindex="3" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedBy: activate to sort column descending" style="width: 15%;">Height</th>
                             <th class="sorting" tabindex="4" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedDate: activate to sort column descending" style="width: 15%; ">Weight</th>
                             <th class="sorting" tabindex="4" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedDate: activate to sort column descending" style="width: 15%;">Width</th>
+                            <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
                             <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
                             <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
                         </tr>
@@ -32,6 +33,7 @@
                                 <td>@product.Width</td>
                                 <td align="center"><button class="btn btn-purple" data-toggle="modal" data-target="#category-updating-modal" onclick="editProduct(@product.ProductId)">Edit</button></td>
                                 <td align="center"><button class="btn btn-danger" onclick="deleteProduct(@product.ProductId)">Delete</button></td>
+                                 <td align="center"><a href="/Product/GetProductDetail/@product.ProductId" class="btn btn-info">Detail</a></td>
                             </tr>
                         }
                     </tbody>
@@ -42,7 +44,7 @@
 </div>
 <div id="product-adding-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
     <div class="modal-dialog">
-        <form asp-controller="Product" asp-action="Add" method="post">
+        <form asp-controller="Product" asp-action="Add" method="post" enctype="multipart/form-data">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -56,26 +58,30 @@
                                 <input asp-for="@Model.Product.Name" type="text" class="form-control" id="field-1" placeholder="Enter Name">
                             </div>
                             <div class="form-group">
-                                <label for="field-1" class="control-label">category Id</label>
+                                <label for="field-2" class="control-label">category Id</label>
                                 <select class="form-control" itemid="drpCategories" asp-for="@Model.Product.CategoryId" asp-items="Model.Categories">
                                     <option disabled selected="-1">--Choose--</option>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="field-1" class="control-label">Height</label>
+                                <label for="field-3" class="control-label">Height</label>
                                 <input asp-for="@Model.Product.Height" type="text" class="form-control" id="field-1" placeholder="Enter Height">
                             </div>
                             <div class="form-group">
-                                <label for="field-1" class="control-label">Weight</label>
+                                <label for="field-4" class="control-label">Weight</label>
                                 <input asp-for="@Model.Product.Weight" type="text" class="form-control" id="field-1" placeholder="Enter Height">
                             </div>
                             <div class="form-group">
-                                <label for="field-1" class="control-label">Width</label>
+                                <label for="field-5" class="control-label">Width</label>
                                 <input asp-for="@Model.Product.Width" type="text" class="form-control" id="field-1" placeholder="Enter Width">
                             </div>
                             <div class="form-group">
-                                <label for="field-12" class="control-label">Description</label>
+                                <label for="field-6" class="control-label">Description</label>
                                 <textarea asp-for="@Model.Product.Description" type="text" class="form-control autogrow" id="descriptionForUpdate" placeholder="Write something about product" style="overflow:hidden;word-wrap:break-word; resize:horizontal; height:104px;"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="field-7" class="control-label">Ürün Resim</label>
+                                <input type="file" asp-items = "@Model.FormFiles" name="formFiles" class="dropify" multiple data-show-upload="true" data-height="85" />
                             </div>
                         </div>
                     </div>
@@ -176,6 +182,7 @@
                              location.reload();
                          }
                      })
-             });
-     }
+             }   );
+     }   )
+     
 </script>
