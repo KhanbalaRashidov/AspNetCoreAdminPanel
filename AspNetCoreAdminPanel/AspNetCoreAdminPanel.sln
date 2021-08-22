@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreAdminPanel.Entiti
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspNetCoreAdminPanel.Business", "AspNetCoreAdminPanel.Business\AspNetCoreAdminPanel.Business.csproj", "{19F89E33-00C2-4018-A564-D3848FE74ABA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AspNetCoreAdminPanel.UI", "AspNetCoreAdminPanel.UI\AspNetCoreAdminPanel.UI.csproj", "{DC3ECB1D-FA23-4828-BBF1-F30D579F1A3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{19F89E33-00C2-4018-A564-D3848FE74ABA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F89E33-00C2-4018-A564-D3848FE74ABA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19F89E33-00C2-4018-A564-D3848FE74ABA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC3ECB1D-FA23-4828-BBF1-F30D579F1A3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC3ECB1D-FA23-4828-BBF1-F30D579F1A3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC3ECB1D-FA23-4828-BBF1-F30D579F1A3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC3ECB1D-FA23-4828-BBF1-F30D579F1A3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
