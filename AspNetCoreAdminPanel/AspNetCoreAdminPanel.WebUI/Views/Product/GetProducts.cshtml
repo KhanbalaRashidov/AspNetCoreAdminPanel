@@ -31,7 +31,7 @@
                                 <td>@product.Height</td>
                                 <td>@product.Weight</td>
                                 <td>@product.Width</td>
-                                <td align="center"><button class="btn btn-purple" data-toggle="modal" data-target="#category-updating-modal" onclick="editProduct(@product.ProductId)">Edit</button></td>
+                                <td align="center"><button class="btn btn-purple" data-toggle="modal" data-target="#product-updating-modal" onclick="editProduct(@product.ProductId)">Edit</button></td>
                                 <td align="center"><button class="btn btn-danger" onclick="deleteProduct(@product.ProductId)">Delete</button></td>
                                  <td align="center"><a href="/Product/GetProductDetail/@product.ProductId" class="btn btn-info">Detail</a></td>
                             </tr>
@@ -161,28 +161,28 @@
      }
 
      function deleteProduct(id) {
-         swal({
-             title: "Are you sure you want to delete it?",
-             text: "Deleted records are not listed again!",
-             type: "warning",
-             showCancelButton: true,
-             cancelButtonText: "Exit",
-             confirmButtonClass: "btn-warning",
-             confirmButtonText: "Yes, you can delete it!",
-             closeOnConfirm: false
-         },
-             function () {
-                 $.get("/Product/Delete/", { id: id })
-                     .done(function (result) {
-                         if (result == 0) {
-                             swal("Warning!", "An Error Has Occurred!", "warning");
-                         }
-                         else {
-                             swal("Success!", "Your operation has been successfully performed!", "success");
-                             location.reload();
-                         }
-                     })
-             }   );
-     }   )
+        swal({
+            title: "Are you sure you want to delete it?",
+            text: "Deleted records are not listed again!",
+            type: "warning",
+            showCancelButton: true,
+            cancelButtonText: "Exit",
+            confirmButtonClass: "btn-warning",
+            confirmButtonText: "Yes, you can delete it!",
+            closeOnConfirm: false
+        },
+            function () {
+                $.get("/Product/Delete/", { id: id })
+                    .done(function (result) {
+                        if (result == 0) {
+                            swal("Warning!", "An Error Has Occurred!", "warning");
+                        }
+                        else {
+                            swal("Basarili!", "Your operation has been successfully performed!", "success");
+                            location.reload();
+                        }
+                    })
+            });
+    }
      
 </script>

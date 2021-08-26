@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace AspNetCoreAdminPanel.DataAccess.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class initialcreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -25,6 +25,24 @@ namespace AspNetCoreAdminPanel.DataAccess.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductImages",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    FileName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FilePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AddedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductImages", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -53,6 +71,10 @@ namespace AspNetCoreAdminPanel.DataAccess.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Categories",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "ProductImages",
                 schema: "dbo");
 
             migrationBuilder.DropTable(

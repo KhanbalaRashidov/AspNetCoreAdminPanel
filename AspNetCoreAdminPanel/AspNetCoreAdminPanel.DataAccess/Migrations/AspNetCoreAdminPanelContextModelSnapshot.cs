@@ -16,7 +16,7 @@ namespace AspNetCoreAdminPanel.DataAccess.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.8")
+                .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("AspNetCoreAdminPanel.Entities.Concrete.Category", b =>
@@ -97,6 +97,41 @@ namespace AspNetCoreAdminPanel.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products", "dbo");
+                });
+
+            modelBuilder.Entity("AspNetCoreAdminPanel.Entities.Concrete.ProductImage", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AddedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("AddedBy");
+
+                    b.Property<DateTime>("AddedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("AddedDate");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FileName");
+
+                    b.Property<string>("FilePath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("FilePath");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int")
+                        .HasColumnName("ProductId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ProductImages", "dbo");
                 });
 #pragma warning restore 612, 618
         }
