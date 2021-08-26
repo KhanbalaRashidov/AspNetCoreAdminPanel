@@ -1,0 +1,134 @@
+﻿@model AspNetCoreAdminPanel.UI.Models.CategoryViewModel
+@{
+    ViewData["Title"] = "GetCategories";
+
+}
+<div class="row">
+    <div class="col-sm-12">
+        <div class="card-box table-responsive">
+            <h4 class="header-title m-t-0 m-b-30">List of Categories</h4>
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#category-adding-modal" data-dismiss="modal" style="margin-bottom:10px; margin-left:8px;">Add Category</button>
+
+            <div id="datatable-buttons_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                <table id="datatable-buttons" class="table table-dark table-hover  " role="grid" aria-describedby="datatable-buttons_info">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting_asc" tabindex="0" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Id: activate to sort column descending" style="width: 20px;">Id</th>
+                            <th class="sorting_" tabindex="1" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending" style="width: 450px;">Name</th>
+                            <th class="sorting" tabindex="2" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="IsActive: activate to sort column ascending" style="width: 100px;">Is Active</th>
+                            <th class="sorting" tabindex="3" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedBy: activate to sort column ascending" style="width: 200px;">Added By</th>
+                            <th class="sorting" tabindex="4" aria-controls="datatable-buttons" rowspan="1" colspan="1" aria-label="AddedDate: activate to sort column ascending" style="width: 175px; display: none;">Added Date</th>
+                            <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
+                            <th rowspan="1" colspan="1" style="width: 50px; display: none" ;>&</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var category in Model.Categories)
+                        {
+                            <tr role="row" class="odd">
+                                <td class="sorting_1" tabindex="0">@category.Id</td>
+                                <td>@category.Name</td>
+                                <td>@category.IsActive</td>
+                                <td>@category.AddedBy</td>
+                                <td>@category.AddedDate</td>
+                                <td align="center"><button class="btn btn-purple" data-toggle="modal" data-target="#category-updating-modal" onclick="editCategory(@category.Id)">Edit</button></td>
+                                <td align="center"><button class="btn btn-danger" onclick="deleteCategory(@category.Id)">Delete</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!-- end col -->
+</div>
+
+<div id="category-adding-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <form asp-controller="Category" asp-action="Add" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><i class="fa fa-plus-circle"></i> Add Category</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Name</label>
+                                <input asp-for="@Model.Category.Name" type="text" class="form-control" id="field-1" placeholder="e.g. T-Shirts">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-purple waves-effect waves-light">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div><!-- /.modal -->
+
+<div id="category-updating-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <form asp-controller="Category" asp-action="Edit" method="post">
+            <input asp-for="@Model.Category.Id" id="categoryId" hidden />
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title"><i class="fa fa-refresh"></i> Update Category</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">Name</label>
+                                <input asp-for="@Model.Category.Name" type="text" class="form-control" id="categoryName" placeholder="Enter the category name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group no-margin">
+                                <label for="field-7" class="control-label">Is Active</label>
+                                <input asp-for="@Model.Category.IsActive" class="form-control checkbox" id="categoryIsActive" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-purple waves-effect waves-light">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div><!-- /.modal -->
+<script type="text/javascript">
+    function editCategory(id) {
+           $.get("/Category/Edit", { id: id })
+               .done(function (category){
+                   $('#categoryId').val(category.id);
+                   $('#categoryName').val(category.name);
+                   $('#categoryIsActive').val(category.isActive);
+                   $('#category-updating-modal').modal('show');
+           })
+    }
+
+        function deleteCategory(id)
+       {
+           //alert("deneme");
+           $.get("/Category/Delete", { id: id })
+                   .done(function (result) {
+                       if (result == 0) {
+                           swal("Xeta!", "Emeliyyat heyata kecmedi!", "warning");
+                       }
+                       else {
+                           swal("Tebrikler!", "Emeliyyat muveffeqiyetle yerine yetirildi!", "success");
+                       }
+            })
+       }
+</script>
+
