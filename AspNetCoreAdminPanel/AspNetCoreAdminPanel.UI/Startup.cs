@@ -6,6 +6,7 @@ using AspNetCoreAdminPanel.WebUI.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -37,6 +38,40 @@ namespace AspNetCoreAdminPanel.UI
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<AppIdentityDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = true;
+
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan=TimeSpan.FromMinutes(10);
+                options.Lockout.AllowedForNewUsers = true;
+
+                options.User.RequireUniqueEmail = true;
+
+                options.SignIn.RequireConfirmedEmail = true;
+                options.SignIn.RequireConfirmedPhoneNumber = false;
+
+            });
+
+            services.ConfigureApplicationCookie(options =>
+            {
+
+                options.LoginPath = "/Security/Login";
+                options.LogoutPath = "/Security/LogOut";
+                options.AccessDeniedPath = "/Security/AccessDenied";
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
+                options.Cookie = new CookieBuilder { 
+                HttpOnly = true,
+                Name="AspNetCoreAdminPanel.Cookie",
+                Path="/",
+                SameSite=SameSiteMode.Lax,
+                SecurePolicy=CookieSecurePolicy.SameAsRequest
+                };
+            });
 
             services.AddControllersWithViews();
             services.AddScoped<ICategoryService, CategoryManager>();
