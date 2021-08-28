@@ -7,14 +7,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-<<<<<<< HEAD:AspNetCoreAdminPanel/AspNetCoreAdminPanel.WebUI/Controllers/ProductController.cs
-=======
 using Microsoft.AspNetCore.Hosting;
->>>>>>> 35643a3460fa6e58ac99fe1625225fdc2d697e1f:AspNetCoreAdminPanel/AspNetCoreAdminPanel.UI/Controllers/ProductController.cs
 using System.IO;
+using Microsoft.AspNetCore.Authorization;
 
 namespace AspNetCoreAdminPanel.UI.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         IProductService _productService;

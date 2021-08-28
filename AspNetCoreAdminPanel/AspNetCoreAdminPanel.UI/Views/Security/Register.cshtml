@@ -1,0 +1,60 @@
+﻿@model AspNetCoreAdminPanel.UI.Models.Security.RegisterViewModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_LayoutSecurity.cshtml";
+}
+<div class="account-pages"></div>
+<div class="clearfix"></div>
+<div class="wrapper-page">
+
+    <div class="m-t-40 card-box">
+        <div class="text-center">
+
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal m-t-20" asp-controller="Security" asp-action="Register" method="post">
+                <div class="text-center">
+                    <a href="/Home/Index" class="logo"><span>AdminPanel<span>Project</span></span></a>
+                </div>
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input id="email" asp-for="@Model.Email" class="form-control" type="email" required="" placeholder="Email">
+                    </div>
+                </div>
+
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input id="userName" asp-for="@Model.UserName" class="form-control" type="text" required="" placeholder="User Name">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input id="password" asp-for="@Model.Password" class="form-control" type="password" required="" placeholder="Password">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input id="confirmedPassword" asp-for="@Model.ConfirmedPassword" class="form-control" type="password" required="" placeholder="Confirmed Pasword">
+                    </div>
+                </div>
+                <div class="form-group text-center m-t-40">
+                    <div class="col-xs-12">
+                        <button type="submit" class="btn btn-custom btn-bordred btn-block waves-effect waves-light">
+                            Save
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12 text-center">
+                        <p class="text-muted">Zaten üyeyim.<a href="/Security/Login" class="text-primary m-l-5"><b>Login</b></a></p>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- end card-box -->
+</div>
+
+
+

@@ -1,6 +1,7 @@
 ﻿using AspNetCoreAdminPanel.Business.Abstract;
 using AspNetCoreAdminPanel.Entities.Concrete;
 using AspNetCoreAdminPanel.UI.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreAdminPanel.UI.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         ICategoryService _categoryService;

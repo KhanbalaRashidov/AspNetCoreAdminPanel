@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace AspNetCoreAdminPanel.UI.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
