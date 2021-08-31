@@ -16,6 +16,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AspNetCoreAdminPanel.UI.Services;
 
 namespace AspNetCoreAdminPanel.UI
 {
@@ -72,8 +73,8 @@ namespace AspNetCoreAdminPanel.UI
                 SecurePolicy=CookieSecurePolicy.SameAsRequest
                 };
             });
-
-            services.AddControllersWithViews();
+            
+            
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<ICategoryDal, EfCategoryDal>();
 
@@ -82,6 +83,10 @@ namespace AspNetCoreAdminPanel.UI
 
             services.AddScoped<IProductImageService, ProductImageManager>();
             services.AddScoped<IProductImageDal, EfProductImageDal>();
+
+            services.AddScoped<IEmailConfiguration, EmailConfiguration>();
+            services.AddScoped<IMailService, MailManager>();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -112,7 +117,7 @@ namespace AspNetCoreAdminPanel.UI
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Product}/{action=GetProducts}/{id?}");
             });
         }
     }

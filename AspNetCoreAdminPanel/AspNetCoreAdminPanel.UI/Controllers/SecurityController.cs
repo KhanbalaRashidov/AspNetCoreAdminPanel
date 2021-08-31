@@ -1,4 +1,5 @@
 ﻿using AspNetCoreAdminPanel.UI.Models.Security;
+using AspNetCoreAdminPanel.UI.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -14,15 +15,17 @@ namespace AspNetCoreAdminPanel.UI.Controllers
         private UserManager<IdentityUser> _userManager;
         private RoleManager<IdentityRole> _roleManager;
         private SignInManager<IdentityUser> _signInManager;
-        private static IConfiguration _configuration;
+        private IConfiguration _configuration;
+        private IMailService _mailService;
 
         public SecurityController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager,
-            SignInManager<IdentityUser> signInManager, IConfiguration configuration)
+            SignInManager<IdentityUser> signInManager, IConfiguration configuration, IMailService mailService)
         {
             _userManager = userManager;
             _roleManager = roleManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _mailService = mailService;
         }
         public IActionResult Login()
         {
@@ -96,7 +99,12 @@ namespace AspNetCoreAdminPanel.UI.Controllers
                     var projectUrl = _configuration.GetSection("ProjectSettings").GetSection("ProjectUrl").Value;
                     var callBackUrl = projectUrl + Url.Action("ConfirmEmail", "Security", new { userId = user.Id, code = confirmationCode });
 
-                    return RedirectToAction("ConfirmEmailInfo","Security", new { email = user.Email });
+                    var emailAddressTo = new List<EmailAddress>();
+                    emailAddressTo.Add(new EmailAddress { Name = registerViewModel.UserName, Address = registerViewModel.Email });
+                    var emailAddressFrom=new List<EmailAddress>();
+                    emailAddressFrom.Add(new EmailAddress { Name = "AdminPanel Project Info", Address = _configuration.GetSection("EmailConfiguration").GetSection("EmailFrom").Value });
+                    _mailService.Send(new EmailMessage { Content = callBackUrl, ToAddress = emailAddressTo, Subject = registerViewModel.UserName, FromAddress = emailAddressFrom });
+                    return RedirectToAction("ConfirmEmailInfo", "Security", new { email = user.Email });
                 }
                 return View(registerViewModel);
             }
@@ -193,6 +201,6 @@ namespace AspNetCoreAdminPanel.UI.Controllers
             return View(resetPasswordViewModel);
         }
 
-       
+
     }
 }
